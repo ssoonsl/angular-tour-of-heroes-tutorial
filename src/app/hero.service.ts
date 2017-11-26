@@ -32,6 +32,17 @@ export class HeroService {
     );
   }
 
+  updateHero (hero: Hero): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    
+    return this.http.put(this.heroesUrl, hero, httpOptions).pipe(
+      tap(_ => this.log(`updated hero id=${hero.id}`)),
+      catchError(this.handleError<any>('updateHero'))
+    );
+  }
+
   private heroesUrl = 'api/heroes' // URL to web api
 
   // Log a HeroService message with the MessageService
